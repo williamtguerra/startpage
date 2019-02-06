@@ -1,23 +1,36 @@
-import React, { Component } from 'react';
+import React, {
+    Component
+} from 'react';
 import './app.css';
-import ReactImage from './react.png';
+import Weather from './components/Weather/Weather';
 
 export default class App extends Component {
-  state = { username: null };
+    state = {
+        username: null
+    };
 
-  componentDidMount() {
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
-  }
+    async componentDidMount() {
+        const res = await fetch('/api/getUsername');
+        const user = await res.json();
 
-  render() {
-    const { username } = this.state;
-    return (
-      <div>
-        {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
-        <img src={ReactImage} alt="react" />
-      </div>
-    );
-  }
+        if (user.username) {
+            this.setState({
+                username: user.username
+            });
+        } else {
+            console.error('');
+        }
+    }
+
+    render() {
+        const {
+            username
+        } = this.state;
+        return (
+            <div>
+                {username ? <div>{`Hello ${username}`}</div> : <div>Loading.. please wait!</div>}
+                <Weather />
+            </div>
+        );
+    }
 }
