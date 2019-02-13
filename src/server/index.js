@@ -21,7 +21,7 @@ app.get('/api/getWeather', async (req, res) => {
         long: -97.7449
     };
 
-    if (sinceLastFetch > (1000 * 60)) {
+    if (sinceLastFetch > 1000 * 60) {
         console.log(`New darksky api fetch @ ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`);
         const url = `https://api.darksky.net/forecast/${token}/${loc.lat},${loc.long}`;
         const response = await fetch(url);

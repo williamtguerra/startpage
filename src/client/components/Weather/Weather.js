@@ -1,6 +1,4 @@
-import React, {
-    Component
-} from 'react';
+import React, { Component } from 'react';
 import './Weather.less';
 
 export default class Weather extends Component {
@@ -22,16 +20,15 @@ export default class Weather extends Component {
     }
 
     render() {
-        const {
-            weather
-        } = this.state;
+        const { weather } = this.state;
 
         return (
             <div className="weather">
                 <div className="current--title">The weather:</div>
-                <div className="current--summary">{weather.currently && weather.currently.summary}</div>
+                <div className="current--summary">
+                    {weather.currently && weather.currently.summary}
+                </div>
             </div>
-
         );
     }
 }

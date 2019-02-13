@@ -1,6 +1,4 @@
-import React, {
-    Component
-} from 'react';
+import React, { Component } from 'react';
 import './Header.less';
 
 export default class Header extends Component {
@@ -23,20 +21,16 @@ export default class Header extends Component {
     }
 
     darkModeToggle = () => {
-        const {
-            theme
-        } = this.state;
+        const { theme } = this.state;
         const newTheme = theme === 'dark' ? 'light' : 'dark';
         this.setState({
             theme: newTheme
         });
         console.log('New theme:', theme);
-    }
+    };
 
     render() {
-        const {
-            username
-        } = this.state;
+        const { username } = this.state;
         return (
             <div className="header">
                 <div className="username">{`username: ${username}`}</div>
