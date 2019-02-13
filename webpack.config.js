@@ -23,6 +23,17 @@ module.exports = {
             use: ['style-loader', 'css-loader']
         },
         {
+            test: /\.less$/,
+            use: ['style-loader', 'css-loader', {
+                loader: 'less-loader',
+                options: {
+                    paths: [
+                        path.join(__dirname, 'src/client/styles')
+                    ]
+                }
+            }]
+        },
+        {
             test: /\.(png|woff|woff2|eot|ttf|svg)$/,
             loader: 'url-loader?limit=100000'
         }]
