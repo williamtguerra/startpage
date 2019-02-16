@@ -1,5 +1,23 @@
 @bg-color: #000;
-@text-color: #fff3ec;
+// @text-color: #fff3ec;
+@text-color: #fffaf0;
 
-@bg-color--dark: #000;
-@text-color--dark: #fff3ec;
+@section-color: #222;
+@button-bg-color: #444;
+@button-bg-color--hover: #555;
+
+.btn {
+    background: @button-bg-color;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: @text-color;
+    cursor: pointer;
+    padding: 6px 9px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        background: @button-bg-color--hover;
+        transition: all 0.2s ease-in-out;
+    }
+}

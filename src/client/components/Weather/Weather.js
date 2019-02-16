@@ -21,13 +21,17 @@ export default class Weather extends Component {
 
     render() {
         const { weather } = this.state;
+        const { currently } = weather;
 
         return (
             <div className="weather">
-                <div className="current--title">The weather:</div>
-                <div className="current--summary">
-                    {weather.currently && weather.currently.summary}
-                </div>
+                {currently && (
+                    <div className="currently">
+                        <div className="current--title title">Currently</div>
+                        <div className="current--temperature">{`${currently.temperature}º`}</div>
+                        <div className="current--summary">{currently.summary}</div>
+                    </div>
+                )}
             </div>
         );
     }

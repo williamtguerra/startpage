@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import './Header.less';
 
 export default class Header extends Component {
-    state = {
-        theme: 'dark',
-        username: null
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            username: null
+        };
+    }
 
     async componentDidMount() {
         const res = await fetch('/api/getUsername');
@@ -20,27 +23,22 @@ export default class Header extends Component {
         }
     }
 
-    darkModeToggle = () => {
-        const { theme } = this.state;
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-        this.setState({
-            theme: newTheme
-        });
-        console.log('New theme:', theme);
-    };
-
     render() {
+        const { nightMode, toggleNightMode } = this.props;
         const { username } = this.state;
+
         return (
             <div className="header">
                 <div className="username">{`username: ${username}`}</div>
-                <div
-                    className="dark-mode-toggle"
-                    onClick={this.darkModeToggle}
-                    onKeyPress={this.darkModeToggle}
-                    role="button"
+                <button
+                    className="btn"
+                    onClick={toggleNightMode}
+                    onKeyPress={toggleNightMode}
+                    type="button"
                     tabIndex="0"
-                />
+                >
+                    {`🌛 (${nightMode})`}
+                </button>
             </div>
         );
     }
