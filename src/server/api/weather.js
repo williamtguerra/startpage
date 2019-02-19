@@ -2,6 +2,8 @@ const fetch = require('isomorphic-fetch');
 const auth = require('./auth.json');
 
 let lastFetch = 0;
+const lat = 30.343;
+const long = -97.738;
 let cache = {};
 
 const fetchWeather = async (req, res) => {
@@ -9,16 +11,12 @@ const fetchWeather = async (req, res) => {
     const sinceLastFetch = d.getTime() - lastFetch;
     const token = auth.darkskyKey;
 
-    const loc = {
-        lat: 30.3393,
-        long: -97.7449
-    };
     try {
-        if (sinceLastFetch > 1000 * 60) {
+        if (sinceLastFetch > 1000 * 60 * 5) {
             console.log(
                 `New darksky api fetch @ ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
             );
-            const url = `https://api.darksky.net/forecast/${token}/${loc.lat},${loc.long}`;
+            const url = `https://api.darksky.net/forecast/${token}/${lat},${long}`;
             const response = await fetch(url);
             const weather = await response.json();
 

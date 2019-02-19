@@ -8,22 +8,20 @@ import actions from './actions/index';
 const mapStateToProps = state => ({ nightMode: state.nightMode });
 
 const mapDispatchToProps = dispatch => ({
-    toggleNightMode: () => dispatch(actions.toggleNightMode())
+    toggleNightMode: () => dispatch(actions.toggleNightMode()),
+    updateWeatherLocation: location => dispatch(actions.updateWeatherLocation(location))
 });
 
 const ConnectedApp = (props) => {
-    const { nightMode, toggleNightMode } = props;
+    const { nightMode, toggleNightMode, updateWeatherLocation } = props;
     const theme = 'dark';
 
     return (
         <div className={`${theme}-theme`}>
             <Header nightMode={nightMode} toggleNightMode={toggleNightMode} />
             <div className="container">
-                <Weather />
+                <Weather updateWeatherLocation={updateWeatherLocation} />
             </div>
-            <footer>
-                <pre>{`nightMode: ${nightMode}`}</pre>
-            </footer>
         </div>
     );
 };

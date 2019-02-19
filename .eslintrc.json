@@ -8,6 +8,7 @@
     "rules": {
         "no-console": "off",
         "comma-dangle": "off",
+        "class-methods-use-this": "off",
         "indent": ["error", 4],
         "react/jsx-filename-extension": "off",
         "react/jsx-indent": ["error", 4],
