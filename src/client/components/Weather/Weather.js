@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import {
-    getDateString,
-    getExtremes,
-    getIcon,
-    getWindDirection
-} from '../../../helpers/weatherHelper';
+import { getDateString, getIcon, getWindDirection } from '../../../helpers/weatherHelper';
+import TemperatureGraph from './TemperatureGraph';
 import './Weather.less';
 
 const { abs, round } = Math;
 
 export default class Weather extends Component {
-    state = {
-        current: null,
-        hourly: null
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            current: null,
+            hourly: null
+        };
+    }
 
     async componentDidMount() {
         const res = await fetch('/api/getWeather');
@@ -59,7 +58,7 @@ export default class Weather extends Component {
         } = current;
 
         const showApparent = abs(round(temperature) - round(apparentTemperature)) > 1;
-        const windDirection = getWindDirection(330 || windBearing);
+        const windDirection = getWindDirection(windBearing);
 
         return (
             <div className="weather-stats weather-section">
@@ -83,7 +82,9 @@ export default class Weather extends Component {
 
         return (
             <div className="weather-hourly weather-section">
-                <div className="hourly-graph">{this.renderHourlyGraph(hours)}</div>
+                <div className="hourly-graph">
+                    <TemperatureGraph data={data} />
+                </div>
                 <div className="hourly-hours">
                     {hours.map((hour, i) => this.renderHour(hour, i))}
                 </div>
@@ -92,53 +93,24 @@ export default class Weather extends Component {
         );
     }
 
-    renderHourlyGraph(data) {
-        const graphWidth = 828;
-        const graphHeight = 100;
-        const { maxTemp, minTemp } = getExtremes(data);
-        const padding = 5;
-        const range = minTemp - maxTemp - 2 * padding;
-        const stepWidth = 72;
-        const xOffset = stepWidth / 2;
-        const scale = graphHeight / range;
-        const yOffset = -(graphHeight * (maxTemp + padding)) / range;
-
-        const d = data
-            .slice(0, 12)
-            .map(
-                (hour, i) => `${i === 0 ? 'M' : 'L'} ${i * stepWidth + xOffset} ${yOffset
-                        + round(hour.temperature) * scale}`
-            )
-            .join(' ');
-
-        return (
-            <svg
-                className="hourly-graph-svg"
-                width={graphWidth + xOffset}
-                height={graphHeight}
-                strokeWidth="3"
-            >
-                <path className="temperature--line" d={`${d}`} fill="none" />
-                <path
-                    className="temperature--fill"
-                    d={`${d} V ${graphHeight} L ${xOffset} ${graphHeight} Z`}
-                    stroke="none"
-                    fill="rgba(255, 255, 200, 0.3)"
-                />
-            </svg>
-        );
-    }
-
     renderHour(hour, index) {
         const {
-            icon, precipProbability, summary, temperature, time
+            icon,
+            precipProbability,
+            summary,
+            temperature,
+            time,
+            windBearing,
+            windSpeed
         } = hour;
         const date = new Date(time * 1000);
+        const windDirection = getWindDirection(windBearing);
 
         return (
             <div className="hour" key={`hour-${index}`} title={summary}>
                 <div className="hour-temperature">{`${round(temperature)}º ${getIcon(icon)}`}</div>
                 <div className="hour-precipProbability">{`${precipProbability}%`}</div>
+                <div className="hour-wind">{`${round(windSpeed)} mph ${windDirection}`}</div>
                 <div className="hour-time">
                     {`${date.toLocaleTimeString('en-US', {
                         hour: 'numeric'
