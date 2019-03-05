@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Header.less';
+import LocationPicker from '../LocationPicker/LocationPicker';
 
 export default class Header extends Component {
     constructor(props) {
@@ -39,6 +40,7 @@ export default class Header extends Component {
                 >
                     {`🌛 (${nightMode})`}
                 </button>
+                <LocationPicker />
             </div>
         );
     }

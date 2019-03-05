@@ -1,5 +1,7 @@
 const { round } = Math;
 
+const ZIP_CODE_REGEX = new RegExp('^\\d{5}$');
+
 const getDateString = (time) => {
     const date = new Date(time);
     const options = {
@@ -65,6 +67,8 @@ const getWindDirection = (windBearing) => {
     return windDirection;
 };
 
+const isValidZipCode = zipCode => zipCode != null && ZIP_CODE_REGEX.test(zipCode);
+
 const iconsMap = {
     'clear-day': '☀️',
     'clear-night': '🌛',
@@ -80,7 +84,10 @@ const iconsMap = {
 
 const getIcon = icon => iconsMap[icon];
 
-export default getWindDirection;
-export {
-    getDateString, getExtremes, getIcon, getWindDirection
+module.exports = {
+    getDateString,
+    getExtremes,
+    getIcon,
+    getWindDirection,
+    isValidZipCode
 };

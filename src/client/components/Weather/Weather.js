@@ -15,8 +15,12 @@ export default class Weather extends Component {
     }
 
     async componentDidMount() {
-        const res = await fetch('/api/getWeather');
+        const zipCodeData = localStorage.getItem('zipCodeData');
+
+        const res = await fetch(`/api/getWeather?zipCode=${zipCodeData}`);
         const weather = await res.json();
+
+        console.log(weather);
 
         if (weather) {
             this.setState({
